@@ -24,12 +24,14 @@
     <ClCompile Include="src\Mesh.cpp" />
     <ClCompile Include="src\ShaderProgram.cpp" />
     <ClCompile Include="src\Texture2D.cpp" />
+    <ClCompile Include="src\Texture3D.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Camera.h" />
     <ClInclude Include="src\Mesh.h" />
     <ClInclude Include="src\ShaderProgram.h" />
     <ClInclude Include="src\Texture2D.h" />
+    <ClInclude Include="src\Texture3D.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="bin\basic.frag" />
@@ -38,6 +40,8 @@
     <None Include="bin\lighting.vert" />
     <None Include="bin\lighting_dir.frag" />
     <None Include="bin\lighting_dir.vert" />
+    <None Include="bin\skyBox.frag" />
+    <None Include="bin\skyBox.vert" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

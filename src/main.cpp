@@ -10,6 +10,7 @@
 
 #include "ShaderProgram.h"
 #include "Texture2D.h"
+#include "Texture3D.h"
 #include "Camera.h"
 #include "Mesh.h"
 
@@ -27,10 +28,11 @@ float gPitch = 0.0f;
 float gRadius = 10.f;
 const float MOUSE_SENSIVITY = 0.25f;
 
-bool gRenderAll = true; // ----------------------------------------------------------------------------------------------------------------------------
+bool gRenderAll = true; // --------------------------------------------------------------------------------------------------------------------------------
+bool gRenderPlanets = true;
 
 glm::vec3 gLook;
-int gCurrentViewIndex = 0;
+int gCurrentViewIndex = 8;
 glm::vec3 gLookMargin[] = {
     glm::vec3(0.f, 22.4f ,0.f),
     glm::vec3(0.f, 20.6f ,0.f),
@@ -97,19 +99,19 @@ glm::vec3 gRocketPartsCurrentForce[] = {
 };
 
 glm::vec3 gRocketPartsCurrentRoatationDir[] = {
-    glm::vec3(rand() % 2 - 1,rand() % 2 - 1, rand() % 2 - 1),
-    glm::vec3(rand() % 2 - 1,rand() % 2 - 1, rand() % 2 - 1),
-    glm::vec3(rand() % 2 - 1,rand() % 2 - 1, rand() % 2 - 1),
-    glm::vec3(rand() % 2 - 1,rand() % 2 - 1, rand() % 2 - 1),
+    glm::vec3( rand() % 2 - 1, 1.0f, rand() % 2 - 1),
+    glm::vec3(rand() % 2 - 1, 1.0f, rand() % 2 - 1),
+    glm::vec3(rand() % 2 - 1, 1.0f, rand() % 2 - 1),
+    glm::vec3(rand() % 2 - 1, 1.0f, rand() % 2 - 1),
     glm::vec3(1.0f, 0.0f, -1.0f),
     glm::vec3(-1.0f, 0.0f, 1.0f),
     glm::vec3(1.0f, 0.0f, 1.0f),
     glm::vec3(-1.0f, 0.0f, -1.0f),
-    glm::vec3(rand() % 2 - 1,rand() % 2 - 1, rand() % 2 - 1),
-    glm::vec3(rand() % 2 - 1,rand() % 2 - 1, rand() % 2 - 1),
-    glm::vec3(rand() % 2 - 1,rand() % 2 - 1, rand() % 2 - 1),
-    glm::vec3(rand() % 2 - 1,rand() % 2 - 1, rand() % 2 - 1),
-    glm::vec3(rand() % 2 - 1,rand() % 2 - 1, rand() % 2 - 1)
+    glm::vec3(rand() % 2 - 1, 1.0f, rand() % 2 - 1),
+    glm::vec3(rand() % 2 - 1, 1.0f, rand() % 2 - 1),
+    glm::vec3(rand() % 2 - 1, 1.0f, rand() % 2 - 1),
+    glm::vec3(rand() % 2 - 1, 1.0f, rand() % 2 - 1),
+    glm::vec3(rand() % 2 - 1, 1.0f, rand() % 2 - 1)
 };
 
 float gRocketPartsCurrentRotationAngle[] = {
@@ -127,7 +129,6 @@ float gRocketPartsCurrentRotationAngle[] = {
     0.0f,
     0.0f
 };
-
 float gRocketPartsCurrentRotationHolder[] = {
     0.0f,
     0.0f,
@@ -393,6 +394,34 @@ int main()
 
     srand((unsigned int)time(NULL));
 
+    Mesh skyBox;
+    skyBox.loadOBJ("../models/cube.obj");
+
+    Texture3D skyBoxTex;
+
+    
+    std::vector<std::string> facesSkyBox = {
+        "../textures/skyBox/right.png",
+        "../textures/skyBox/left.png",
+        "../textures/skyBox/top.png",
+        "../textures/skyBox/bot.png",
+        "../textures/skyBox/front.png",
+        "../textures/skyBox/back.png"
+    };
+    
+    /*
+    std::vector<std::string> facesSkyBox = {
+        "../textures/finalSpace/right.png",
+        "../textures/finalSpace/left.png",
+        "../textures/finalSpace/up.png",
+        "../textures/finalSpace/down.png",
+        "../textures/finalSpace/middle.png",
+        "../textures/finalSpace/back.png"
+    };
+    */
+
+    skyBoxTex.loadTexture(facesSkyBox);
+
     // Rocket
     Mesh saturnV[13];
     Texture2D saturnTex;
@@ -413,9 +442,28 @@ int main()
     glm::vec3 launcherPos(0.0f, 0.0f, 0.0f);
     glm::vec3 launcherScale(.1f, .1f, .1f);
 
-    //Mesh lightMesh;
-    //lightMesh.loadOBJ("../models/light.obj");
+    Mesh lightMesh;
+    lightMesh.loadOBJ("../models/light.obj");
 
+    Mesh moon;
+    Texture2D moonTex;
+
+    Mesh earth;
+    Texture2D earthTex;
+
+    if (gRenderPlanets) {
+        moon.loadOBJ("../models/moon.obj");
+        moonTex.loadTexture("../textures/moon/Material _50_albedo.jpg");
+
+        earth.loadOBJ("../models/earth.obj");
+        earthTex.loadTexture("../textures/earth/land.png");
+    }
+
+    glm::vec3 moonPos(-210.f, 8000.f, -250.f);
+    glm::vec3 moonScale(200.f, 200.f, 200.f);
+
+    glm::vec3 earthPos(0.f, -3045.f, 0.f);
+    glm::vec3 earthScale(3000.f, 3000.f, 3000.f);
 
     if (gRenderAll) {
         
@@ -440,10 +488,12 @@ int main()
 
         launcher.loadOBJ("../models/ML_HP.obj");
         launcherTex.loadTexture("../textures/ML_HP_Tex.jpg", true);
+
+        floor.loadOBJ("../models/floor.obj");
+        floorTex.loadTexture("../textures/tile_floor.jpg", true);
     };
 
-    floor.loadOBJ("../models/floor.obj");
-    floorTex.loadTexture("../textures/tile_floor.jpg", true);
+    
     
     Mesh testCube;
     testCube.loadOBJ("../models/cube.obj");
@@ -456,6 +506,12 @@ int main()
 
     ShaderProgram lightingShader;
     lightingShader.loadShaders("lighting_dir.vert", "lighting_dir.frag");
+
+    ShaderProgram skyBoxShader;
+    skyBoxShader.loadShaders("skyBox.vert", "skyBox.frag");
+
+    skyBoxShader.use();
+    skyBoxShader.setUniformSampler("skyBox", 0);
 
     double lastTime = glfwGetTime();
     //float angle = 0.0f;
@@ -486,7 +542,7 @@ int main()
 
         //view = fpsCamera.getViewMatrix();
 
-        projection = glm::perspective(glm::radians(45.0f), (float)gWindowWidth / (float)gWindowHeight, 0.1f, 1000.0f);
+        projection = glm::perspective(glm::radians(45.0f), (float)gWindowWidth / (float)gWindowHeight, 0.1f, 20000.0f);
         //projection = glm::perspective(glm::radians(fpsCamera.getFOV()), (float)gWindowWidth / (float)gWindowHeight, 0.1f, 100.0f);
 
 
@@ -525,6 +581,7 @@ int main()
 
         glm::mat4 I = glm::mat4(1.0f);
 
+
         if (gRenderAll) {
             for (int i = 0; i < 13; i++)
             {
@@ -544,6 +601,7 @@ int main()
                     * glm::scale(I, satScale);
                 model = glm::rotate(model, glm::radians(gRocketPartsCurrentRotationHolder[i]), gRocketPartsCurrentRoatationDir[i]);
 
+
                 lightingShader.setUniform("model", model);
 
                 lightingShader.setUniform("material.ambient", glm::vec3(0.1f, 0.1f, 0.1f));
@@ -551,20 +609,53 @@ int main()
                 lightingShader.setUniform("material.shininess", 150.0f);
                 lightingShader.setUniformSampler("material.diffuseMap", 0);
 
-                        
-
                 saturnTex.bind(0);		// set the texture before drawing.  Our simple OBJ mesh loader does not do materials yet.
                 saturnV[i].draw();			// Render the OBJ mesh
                 saturnTex.unbind(0);
 
+                /*
                 if (gRocketPartsCurrentForce[i].x > 0.0f) {
                     gRocketPartsCurrentForce[i].x -= 0.0001f;
                     gRocketPartsCurrentForce[i].z -= 0.0001f;
                 }
+                */
             }
         };
 
+        if (gRenderPlanets) {
+            model = glm::translate(glm::mat4(1.0f), moonPos) * glm::scale(glm::mat4(1.0f), moonScale);
+            lightingShader.setUniform("model", model);
+
+            lightingShader.setUniform("material.ambient", glm::vec3(0.1f, 0.1f, 0.1f));
+            lightingShader.setUniform("material.specular", glm::vec3(0.5f, 0.5f, 0.5f));
+            lightingShader.setUniform("material.shininess", 10.0f);
+            lightingShader.setUniformSampler("material.diffuseMap", 0);
+
+
+
+            moonTex.bind(0);
+            moon.draw();
+            moonTex.unbind(0);
+
+
+            model = glm::translate(glm::mat4(1.0f), earthPos) * glm::scale(glm::mat4(1.0f), earthScale);
+            model = glm::rotate(model, glm::radians(60.f), glm::vec3(0.0f, 0.0f, 1.0f));
+            lightingShader.setUniform("model", model);
+
+            lightingShader.setUniform("material.ambient", glm::vec3(0.1f, 0.1f, 0.1f));
+            lightingShader.setUniform("material.specular", glm::vec3(0.5f, 0.5f, 0.5f));
+            lightingShader.setUniform("material.shininess", 10.0f);
+            lightingShader.setUniformSampler("material.diffuseMap", 0);
+
+
+
+            earthTex.bind(0);
+            earth.draw();
+            earthTex.unbind(0);
+        }
+
         // floor
+        /*
         model = glm::translate(glm::mat4(1.0f), floorPos) * glm::scale(glm::mat4(1.0f), floorScale);
         lightingShader.setUniform("model", model);
 
@@ -578,7 +669,7 @@ int main()
         floorTex.bind(0);
         floor.draw();
         floorTex.unbind(0);
-
+        */
         // launcher
         model = glm::translate(glm::mat4(1.0f), launcherPos) * glm::scale(glm::mat4(1.0f), launcherScale);
         lightingShader.setUniform("model", model);
@@ -596,16 +687,33 @@ int main()
 
         //render the light
 
-        //model = glm::translate(glm::mat4(1.0f), lightPos);
-        //lightShader.use();
-        //lightShader.setUniform("lightColor", lightColor);
+        model = glm::translate(glm::mat4(1.0f), gRocketPartsCurrentPos[12] - glm::vec3(0.f, 2.f, 0.f)) * glm::scale(glm::mat4(1.0f), glm::vec3(5.f, 5.f, 5.f));
+        lightShader.use();
+        lightShader.setUniform("lightColor", lightColor);
 
-        //lightShader.setUniform("model", model);
-        //lightShader.setUniform("view", view);
-        //lightShader.setUniform("projection", projection);
+        lightShader.setUniform("model", model);
+        lightShader.setUniform("view", view);
+        lightShader.setUniform("projection", projection);
 
-        //lightMesh.draw();
+        lightMesh.draw();
 
+
+        //SKY
+        
+        glDepthFunc(GL_LEQUAL);
+
+        skyBoxShader.use();
+        view = glm::mat4(glm::mat3(orbitCamera.getViewMatrix()));
+        skyBoxShader.setUniform("model", glm::mat4(1.0f));
+        skyBoxShader.setUniform("view", view);
+        skyBoxShader.setUniform("projection", projection);
+
+        skyBoxTex.bind(0);
+        skyBox.draw();
+        skyBoxTex.unbind(0);
+
+        glDepthFunc(GL_LESS);
+        
 
         lastTime = currentTime;
 

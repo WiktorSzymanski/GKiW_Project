@@ -30,6 +30,9 @@
     <ClCompile Include="src\Mesh.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
+    <ClCompile Include="src\Texture3D.cpp">
+      <Filter>Pliki źródłowe</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ShaderProgram.h">
@@ -42,6 +45,9 @@
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
     <ClInclude Include="src\Mesh.h">
+      <Filter>Pliki nagłówkowe</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Texture3D.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
   </ItemGroup>
@@ -62,6 +68,12 @@
       <Filter>Pliki zasobów</Filter>
     </None>
     <None Include="bin\lighting_dir.vert">
+      <Filter>Pliki zasobów</Filter>
+    </None>
+    <None Include="bin\skyBox.frag">
+      <Filter>Pliki zasobów</Filter>
+    </None>
+    <None Include="bin\skyBox.vert">
       <Filter>Pliki zasobów</Filter>
     </None>
   </ItemGroup>

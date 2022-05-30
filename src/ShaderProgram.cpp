@@ -12,6 +12,7 @@ ShaderProgram::~ShaderProgram() {
 
 bool ShaderProgram::loadShaders(const char* vsFileName, const char* fsFileName) {
 
+    std::cout << vsFileName << std::endl;
     string vsString = fileToString(vsFileName);
     string fsString = fileToString(fsFileName);
     const GLchar* vsSourcePtr = vsString.c_str();
