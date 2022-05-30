@@ -558,7 +558,9 @@ int main()
         viewPos.z = orbitCamera.getPosition().z;
 
         // the light
-        //glm::vec3 lightPos(0.0f, 2.0f, 10.0f);
+        glm::vec3 lightPos = gRocketPartsCurrentPos[0] + gLookMargin[0] + glm::vec3(0.f, .25f, 0.f);
+        glm::vec3 lightColor2(1.0f, 0.0f, 0.0f);
+        glm::vec3 lightColorBulb(1.0f, 0.7f, 0.7f);
         glm::vec3 lightColor(1.0f, 1.0f, 1.0f);
         glm::vec3 lightDir(0.0f, -0.9f, -0.17f);
 
@@ -578,6 +580,11 @@ int main()
         lightingShader.setUniform("light.specular", glm::vec3(1.0f, 1.0f, 1.0f));
         //lightingShader.setUniform("light.position", lightPos);
         lightingShader.setUniform("light.direction", lightDir);
+
+        lightingShader.setUniform("light2.ambient", glm::vec3(0.2f, 0.2f, 0.2f));
+        lightingShader.setUniform("light2.diffuse", lightColor2);
+        lightingShader.setUniform("light2.specular", glm::vec3(1.0f, 1.0f, 1.0f));
+        lightingShader.setUniform("light2.position", lightPos);
 
         glm::mat4 I = glm::mat4(1.0f);
 
@@ -687,9 +694,9 @@ int main()
 
         //render the light
 
-        model = glm::translate(glm::mat4(1.0f), gRocketPartsCurrentPos[12] - glm::vec3(0.f, 2.f, 0.f)) * glm::scale(glm::mat4(1.0f), glm::vec3(5.f, 5.f, 5.f));
+        model = glm::translate(glm::mat4(1.0f), lightPos) * glm::scale(glm::mat4(1.0f), glm::vec3(.5f, .5f, .5f));
         lightShader.use();
-        lightShader.setUniform("lightColor", lightColor);
+        lightShader.setUniform("lightColor", lightColorBulb);
 
         lightShader.setUniform("model", model);
         lightShader.setUniform("view", view);
