@@ -19,6 +19,7 @@ struct MovingLight {
 	vec3 ambient;
 	vec3 diffuse;
 	vec3 specular;
+	bool isOn;
 };
 
 //-------------
@@ -74,7 +75,6 @@ void main() {
 	vec3 halfDir = normalize(lightDir + viewDir);
 	vec3 halfDir2 = normalize(lightDir2 + viewDir);
 
-
 	float NDotH = max(dot(normal, halfDir), 0.2f);
 	float NDotH2 = max(dot(normal, halfDir2), 0.2f);
 
@@ -82,7 +82,15 @@ void main() {
 	vec3 specular2 = light2.specular * material.specular * pow(NDotH2, material.shininess);
 
 	vec4 lightOne = vec4(ambient + diffuse + specular , 1.0f);
-	vec4 lightTwo = vec4(ambient2 + diffuse2 + specular2 , 1.0f) / attenuation;
+
+
+	
+	vec4 lightTwo;
+	if (light2.isOn) {
+		lightTwo = vec4(ambient2 + diffuse2 + specular2 , 1.0f) / attenuation;
+	} else {
+		lightTwo = vec4(0.0f, 0.0f, 0.0f, 1.0f);
+	}
 
 	fragColor = lightOne + lightTwo;
 };
