@@ -549,7 +549,7 @@ int main()
     // Main loop ===============================================================================================================================================
     double lastTime = glfwGetTime();
 
-    bool lightIsOn = true;
+    bool lightIsOn = 1;
     int frameCount = 0;
 
     while (!glfwWindowShouldClose(gWindow)) {
@@ -590,12 +590,15 @@ int main()
         
 
         // Light stuff
-        glm::vec3 lightPos = gRocketPartsCurrentPos[0] + gLookMargin[0] - glm::vec3(0.0f, .20f, 0.0f); // Needs to be changed
+        glm::vec3 lightPos2 = gRocketPartsCurrentPos[0] + gLookMargin[0] - glm::vec3(0.0f, .0f, 0.0f); // Needs to be changed
         glm::vec3 lightColor2(1.0f, 0.0f, 0.0f);
+
+        glm::vec3 lightPos3 = gRocketPartsCurrentPos[12] + gLookMargin[12] - glm::vec3(0.0f, 7.5f, 0.0f); // Needs to be changed
+        glm::vec3 lightColor3(1.0f, 0.6f, 0.0f);
 
         // Blinking
         if (frameCount % 750 == 0) {
-            lightIsOn = !lightIsOn;
+            lightIsOn ? lightIsOn = 0 : lightIsOn = 1;
         }
 
         glm::vec3 lightColor2Bulb;
@@ -621,18 +624,24 @@ int main()
         lightingShader.setUniform("light.specular", glm::vec3(1.0f, 1.0f, 1.0f));
         lightingShader.setUniform("light.direction", lightDir);
 
-        lightingShader.setUniform("light2.ambient", glm::vec3(0.2f, 0.0f, 0.0f));
-        lightingShader.setUniform("light2.diffuse", lightColor2);
-        lightingShader.setUniform("light2.specular", glm::vec3(1.0f, 0.0f, 0.0f));
-        lightingShader.setUniform("light2.position", lightPos);
-        lightingShader.setUniform("light2.isOn", lightIsOn);
+        lightingShader.setUniform("lightTab[0].ambient", glm::vec3(0.2f, 0.0f, 0.0f));
+        lightingShader.setUniform("lightTab[0].diffuse", lightColor2);
+        lightingShader.setUniform("lightTab[0].specular", glm::vec3(1.0f, 0.0f, 0.0f));
+        lightingShader.setUniform("lightTab[0].position", lightPos2);
+        lightingShader.setUniform("lightTab[0].isOn", lightIsOn);
+
+        lightingShader.setUniform("lightTab[1].ambient", glm::vec3(0.2f, 0.0f, 0.0f));
+        lightingShader.setUniform("lightTab[1].diffuse", lightColor3);
+        lightingShader.setUniform("lightTab[1].specular", glm::vec3(1.0f, 0.0f, 0.0f));
+        lightingShader.setUniform("lightTab[1].position", lightPos3);
+        lightingShader.setUniform("lightTab[1].isOn", gLaunch);
 
 
         // Rendering rocket
         if (gRenderRocket) {
             for (int i = 0; i < 13; i++)
             {
-                if (gRocketPartsCurrentVelocity[i].y > 80.f && gRocketPartsCurrentForce[i].y > 0.0f) {
+                if (gRocketPartsCurrentVelocity[i].y > 100.f && gRocketPartsCurrentForce[i].y > 0.0f) {
                     gRocketPartsCurrentForce[i].y = 0.0f;
                 }
 
@@ -730,7 +739,7 @@ int main()
 
         // Rendering light on top of the rocket
 
-        model = glm::translate(glm::mat4(1.0f), lightPos) * glm::scale(glm::mat4(1.0f), lightScale);
+        model = glm::translate(glm::mat4(1.0f), lightPos2) * glm::scale(glm::mat4(1.0f), lightScale);
         lightShader.use();
         lightShader.setUniform("lightColor", lightColor2Bulb);
 
