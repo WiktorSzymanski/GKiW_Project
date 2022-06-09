@@ -1,4 +1,6 @@
 ﻿# GKiW - Project
+ Simple OpenGL "game" / somewhat interactive animation. Basically you press "L" to launch the Saturn V rocket and then "N" to enter the next stages of rocket disintegration, while admiring astonishing views ;). 
+ 
 MANUAL:
 L - launch / toggle the fire  
 N - next stage  
