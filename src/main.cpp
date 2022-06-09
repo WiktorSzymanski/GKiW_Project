@@ -14,6 +14,47 @@
 #include "Camera.h"
 #include "Mesh.h"
 
+// Cloud struct
+struct Cloud {
+    glm::mat4 model;
+    glm::vec3 scale;
+    glm::vec4 colAlph;
+    double createTime;
+};
+
+bool gFlames = false;
+bool gLaunch = false;
+int gRocketStage = 0;
+float gRocketPartsCurrentRotationAngle[13] = {
+    0.0f,
+    0.0f,
+    0.0f,
+    0.0f,
+    0.0f,
+    0.0f,
+    0.0f,
+    0.0f,
+    0.0f,
+    0.0f,
+    0.0f,
+    0.0f,
+    0.0f
+};
+float gRocketPartsCurrentRotationHolder[13] = {
+    0.0f,
+    0.0f,
+    0.0f,
+    0.0f,
+    0.0f,
+    0.0f,
+    0.0f,
+    0.0f,
+    0.0f,
+    0.0f,
+    0.0f,
+    0.0f,
+    0.0f
+};
 
 // Window global stuff ===============================================================================================================================================
 const char* APP_TITLE = "OpenGL";
@@ -56,19 +97,19 @@ glm::vec3 gLookMargin[] = {
     glm::vec3(0.f,  8.4f ,0.f)
 };
 glm::vec3 gRocketPartsCurrentPos[] = { 
-    glm::vec3(0.0f, 3.0f, 0.0f),
-    glm::vec3(0.0f, 3.0f, 0.0f),
-    glm::vec3(0.0f, 3.0f, 0.0f),
-    glm::vec3(0.0f, 3.0f, 0.0f),
-    glm::vec3(0.0f, 3.0f, 0.0f),
-    glm::vec3(0.0f, 3.0f, 0.0f),
-    glm::vec3(0.0f, 3.0f, 0.0f),
-    glm::vec3(0.0f, 3.0f, 0.0f),
-    glm::vec3(0.0f, 3.0f, 0.0f),
-    glm::vec3(0.0f, 3.0f, 0.0f),
-    glm::vec3(0.0f, 3.0f, 0.0f),
-    glm::vec3(0.0f, 3.0f, 0.0f),
-    glm::vec3(0.0f, 3.0f, 0.0f)
+    glm::vec3(0.f, 22.55f ,0.f),
+    glm::vec3(0.f, 22.22f ,0.f),
+    glm::vec3(0.f, 20.8f ,0.f),
+    glm::vec3(0.f, 20.0f ,0.f),
+    glm::vec3(0.f, 20.0f ,0.f),
+    glm::vec3(0.f, 20.0f ,0.f),
+    glm::vec3(0.f, 20.0f ,0.f),
+    glm::vec3(0.f, 20.0f ,0.f),
+    glm::vec3(0.f, 16.3f ,0.f),
+    glm::vec3(0.f, 16.3f ,0.f),
+    glm::vec3(0.f, 11.4f ,0.f),
+    glm::vec3(0.f, 11.4f ,0.f),
+    glm::vec3(0.f,  3.0f ,0.f)
 };
 glm::vec3 gRocketPartsCurrentVelocity[] = {
     glm::vec3(0.0f, 0.0f, 0.0f),
@@ -116,45 +157,14 @@ glm::vec3 gRocketPartsCurrentRoatationDir[] = {
     glm::vec3(rand() % 2 - 1, 1.0f, rand() % 2 - 1)
 };
 
-bool gLaunch = false;
-int gRocketStage = 0;
-float gRocketPartsCurrentRotationAngle[] = {
-    0.0f,
-    0.0f,
-    0.0f,
-    0.0f,
-    0.0f,
-    0.0f,
-    0.0f,
-    0.0f,
-    0.0f,
-    0.0f,
-    0.0f,
-    0.0f,
-    0.0f
-};
-float gRocketPartsCurrentRotationHolder[] = {
-    0.0f,
-    0.0f,
-    0.0f,
-    0.0f,
-    0.0f,
-    0.0f,
-    0.0f,
-    0.0f,
-    0.0f,
-    0.0f,
-    0.0f,
-    0.0f,
-    0.0f
-};
+int gFireLocationIndex = 12;
 
 // Rendering flags ----------------------------------------------------------------------------------------------------------------------------------------
 bool gRenderRocket = true;
 bool gRenderPlanets = true;
 
-void setLook() {
-    gLook = gRocketPartsCurrentPos[gCurrentViewIndex] + gLookMargin[gCurrentViewIndex];
+glm::vec3 setLook(int index) {
+    return gRocketPartsCurrentPos[index];
 }
 
 void detatch() {
@@ -165,6 +175,8 @@ void detatch() {
 
         gRocketPartsCurrentRotationAngle[12] = (float(rand())  / float((RAND_MAX))) * 6 - 3.0f;
         gRocketPartsCurrentRotationAngle[11] = (float(rand()) / float((RAND_MAX))) * 6 - 3.0f;
+
+        gFireLocationIndex = 10;
         break;
     case 2:
         gRocketPartsCurrentForce[10] = glm::vec3((float(rand()) / float((RAND_MAX))) - 0.5f, -3.0f, (float(rand()) / float((RAND_MAX))) - 0.5f);
@@ -174,6 +186,8 @@ void detatch() {
         gRocketPartsCurrentRotationAngle[10] = (float(rand()) / float((RAND_MAX))) * 6 - 3.0f;
         gRocketPartsCurrentRotationAngle[9] = (float(rand()) / float((RAND_MAX))) * 6 - 3.0f;
         gRocketPartsCurrentRotationAngle[0] = (float(rand()) / float((RAND_MAX))) * 6 - 3.0f; //------------------------------------------------------
+
+        gFireLocationIndex = 8;
         break;
     case 3:
         gRocketPartsCurrentForce[8] = glm::vec3((float(rand()) / float((RAND_MAX))) - 0.5f, -3.0f, (float(rand()) / float((RAND_MAX))) - 0.5f);
@@ -189,6 +203,9 @@ void detatch() {
         gRocketPartsCurrentRotationAngle[5] = -5.0f;
         gRocketPartsCurrentRotationAngle[4] = -5.0f;
         gRocketPartsCurrentRotationAngle[3] = (float(rand()) / float((RAND_MAX))) * 6 - 3.0f;
+
+
+        gFireLocationIndex = 2;
         break;
     }
 }
@@ -281,14 +298,20 @@ void glfw_onKey(GLFWwindow* window, int key, int scancode, int action, int mode)
     }
 
     if (key == GLFW_KEY_L && action == GLFW_PRESS) {
-        gLaunch = true;
-        for (int i = 0; i < 13; i++) {
-            gRocketPartsCurrentForce[i].y = 3.0f;
+        if (!gLaunch) {
+            gLaunch = true;
+            gFlames = true;
+            for (int i = 0; i < 13; i++) {
+                gRocketPartsCurrentForce[i].y = 3.0f;
+            }
+        } else {
+            gFlames = !gFlames;
         }
     }
 
     if (key == GLFW_KEY_N && action == GLFW_PRESS && gRocketStage < 3 && gLaunch) {
         gRocketStage += 1;
+        gFlames = false;
         detatch();
     }
 
@@ -337,6 +360,22 @@ void showFPS(GLFWwindow* window) {
     frameCount++;
 }
 
+void addCloud(std::vector<Cloud>* clouds, glm::vec3 pos) {
+    Cloud cloud;
+    cloud.scale = glm::vec3((float)(rand() % 2 - 0.5), (float)(rand() % 2 - 0.5), (float)(rand() % 2 - 0.5));
+    cloud.model = glm::translate(glm::mat4(1.0f), pos)
+        * glm::rotate(glm::mat4(1.0f), glm::radians((float)(rand() % 180)), glm::vec3(0.0f, 1.0f, 0.0f))
+        * glm::scale(glm::mat4(1.0f), cloud.scale);
+    cloud.colAlph = glm::vec4(1.0f, 1.0f, 1.0f, 0.5f);
+    cloud.createTime = glfwGetTime();
+
+    clouds->push_back(cloud);
+}
+
+void changeCloudVals(Cloud* cloud, double currentTime) {
+    cloud->colAlph.a -= (currentTime - cloud->createTime)/100;
+}
+
 bool initOpenGL() {
     if (!glfwInit()) {
         std::cerr << "GLFW initialization failed" << std::endl;
@@ -355,6 +394,8 @@ bool initOpenGL() {
 
         if (pVmode != NULL) {
             gWindow = glfwCreateWindow(pVmode->width, pVmode->height, APP_TITLE, pMonitor, NULL);
+            gWindowWidth = pVmode->width;
+            gWindowHeight = pVmode->height;
         }
 
     }
@@ -387,6 +428,8 @@ bool initOpenGL() {
     glClearColor(0.23f, 0.38f, 0.47f, 1.0f);
     glViewport(0, 0, gWindowWidth, gWindowHeight);
     glEnable(GL_DEPTH_TEST);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     return true;
 }
@@ -433,6 +476,10 @@ int main()
     // Light source - sphere
     Mesh lightMesh;
 
+    // Smoke cloud
+    Mesh cloud;
+    Texture2D cloudTex;
+
 
     // Loading objects and textures =============================================================================================================================
 
@@ -460,19 +507,19 @@ int main()
 
     // Rocket
     if (gRenderRocket) {
-        saturnV[0].loadOBJ("../models/betSat/Saturn V_0.obj");
-        saturnV[1].loadOBJ("../models/betSat/Saturn V_1.obj");
-        saturnV[2].loadOBJ("../models/betSat/Saturn V_2.obj");
-        saturnV[3].loadOBJ("../models/betSat/Saturn V_3.obj");
-        saturnV[4].loadOBJ("../models/betSat/Saturn V_4_1.obj");
-        saturnV[5].loadOBJ("../models/betSat/Saturn V_4_2.obj");
-        saturnV[6].loadOBJ("../models/betSat/Saturn V_4_3.obj");
-        saturnV[7].loadOBJ("../models/betSat/Saturn V_4_4.obj");
-        saturnV[8].loadOBJ("../models/betSat/Saturn V_5.obj");
-        saturnV[9].loadOBJ("../models/betSat/Saturn V_6.obj");
-        saturnV[10].loadOBJ("../models/betSat/Saturn V_7.obj");
-        saturnV[11].loadOBJ("../models/betSat/Saturn V_8.obj");
-        saturnV[12].loadOBJ("../models/betSat/Saturn V_9.obj");
+        saturnV[0].loadOBJ("../models/saturn/Saturn V_0.obj");
+        saturnV[1].loadOBJ("../models/saturn/Saturn V_1.obj");
+        saturnV[2].loadOBJ("../models/saturn/Saturn V_2.obj");
+        saturnV[3].loadOBJ("../models/saturn/Saturn V_3.obj");
+        saturnV[7].loadOBJ("../models/saturn/Saturn V_4_1.obj");
+        saturnV[6].loadOBJ("../models/saturn/Saturn V_4_2.obj");
+        saturnV[5].loadOBJ("../models/saturn/Saturn V_4_3.obj");
+        saturnV[4].loadOBJ("../models/saturn/Saturn V_4_4.obj");
+        saturnV[8].loadOBJ("../models/saturn/Saturn V_5.obj");
+        saturnV[9].loadOBJ("../models/saturn/Saturn V_6.obj");
+        saturnV[10].loadOBJ("../models/saturn/Saturn V_7.obj");
+        saturnV[11].loadOBJ("../models/saturn/Saturn V_8.obj");
+        saturnV[12].loadOBJ("../models/saturn/Saturn V_9.obj");
 
         saturnTex.loadTexture("../textures/Saturn_V_Texture2.png", true);
     };
@@ -501,6 +548,10 @@ int main()
     // Light source
     lightMesh.loadOBJ("../models/light.obj");
 
+    // Smoke cloud
+    cloud.loadOBJ("../models/cloud.obj");
+    cloudTex.loadTexture("../textures/white.png");
+
 
     // Objects positions and scales =============================================================================================================================
 
@@ -526,14 +577,18 @@ int main()
     // Light
     glm::vec3 lightScale(.2f, .2f, .2f);
 
-    
+    // Smoke cloud
+    std::vector<Cloud> clouds;
 
-    
+
     // Loading shaders ==========================================================================================================================================
     
 
     ShaderProgram lightShader;
     lightShader.loadShaders("basic.vert", "basic.frag");
+
+    ShaderProgram cloudShader;
+    cloudShader.loadShaders("cloud.vert", "cloud.frag");
 
     ShaderProgram lightingShader;
     lightingShader.loadShaders("lighting_dir.vert", "lighting_dir.frag");
@@ -548,9 +603,10 @@ int main()
 
     // Main loop ===============================================================================================================================================
     double lastTime = glfwGetTime();
+    double lastLightChangeTime = 0;
+    double lastCloudAddTime = 0;
 
     bool lightIsOn = 1;
-    int frameCount = 0;
 
     while (!glfwWindowShouldClose(gWindow)) {
         showFPS(gWindow);
@@ -567,13 +623,10 @@ int main()
 
         glm::mat4 model(1.0), view(1.0), projection(1.0);
 
-        setLook();
+        gLook = setLook(gCurrentViewIndex);
         orbitCamera.setLookAt(gLook);
         orbitCamera.rotate(gYaw, gPitch);
         orbitCamera.setRadius(gRadius);
-
-        view = orbitCamera.getViewMatrix();
-        //view = fpsCamera.getViewMatrix();
 
         projection = glm::perspective(glm::radians(45.0f), (float)gWindowWidth / (float)gWindowHeight, 0.1f, 20000.0f);
         //projection = glm::perspective(glm::radians(fpsCamera.getFOV()), (float)gWindowWidth / (float)gWindowHeight, 0.1f, 100.0f);
@@ -587,18 +640,38 @@ int main()
         //viewPos.x = fpsCamera.getPosition().x;
         //viewPos.y = fpsCamera.getPosition().y;
         //viewPos.z = fpsCamera.getPosition().z;
-        
+
+        // Rendering skybox
+
+        glDepthFunc(GL_LEQUAL);
+
+        skyBoxShader.use();
+        view = glm::mat4(glm::mat3(orbitCamera.getViewMatrix()));
+        skyBoxShader.setUniform("model", glm::mat4(1.0f));
+        skyBoxShader.setUniform("view", view);
+        skyBoxShader.setUniform("projection", projection);
+
+        skyBoxTex.bind(0);
+        skyBox.draw();
+        skyBoxTex.unbind(0);
+
+        glDepthFunc(GL_LESS);
+
+        view = orbitCamera.getViewMatrix();
+        //view = fpsCamera.getViewMatrix();
+
 
         // Light stuff
-        glm::vec3 lightPos2 = gRocketPartsCurrentPos[0] + gLookMargin[0] - glm::vec3(0.0f, .0f, 0.0f); // Needs to be changed
+        glm::vec3 lightPos2 = gRocketPartsCurrentPos[0] + glm::vec3(0.0f, 2.0f, 0.0f); // Needs to be changed
         glm::vec3 lightColor2(1.0f, 0.0f, 0.0f);
 
-        glm::vec3 lightPos3 = gRocketPartsCurrentPos[12] + gLookMargin[12] - glm::vec3(0.0f, 7.5f, 0.0f); // Needs to be changed
+        glm::vec3 lightPos3 = gRocketPartsCurrentPos[gFireLocationIndex] - glm::vec3(0.0f, 1.5f, 0.0f); // Needs to be changed
         glm::vec3 lightColor3(1.0f, 0.6f, 0.0f);
 
         // Blinking
-        if (frameCount % 750 == 0) {
+        if (currentTime - lastLightChangeTime >= 1) {
             lightIsOn ? lightIsOn = 0 : lightIsOn = 1;
+            lastLightChangeTime = currentTime;
         }
 
         glm::vec3 lightColor2Bulb;
@@ -634,8 +707,7 @@ int main()
         lightingShader.setUniform("lightTab[1].diffuse", lightColor3);
         lightingShader.setUniform("lightTab[1].specular", glm::vec3(1.0f, 0.0f, 0.0f));
         lightingShader.setUniform("lightTab[1].position", lightPos3);
-        lightingShader.setUniform("lightTab[1].isOn", gLaunch);
-
+        lightingShader.setUniform("lightTab[1].isOn", gFlames);
 
         // Rendering rocket
         if (gRenderRocket) {
@@ -674,10 +746,23 @@ int main()
                     gRocketPartsCurrentForce[i].y += 0.001f;
                 }
             }
-        };
+
+            // Rendering light on top of the rocket
+
+            model = glm::translate(glm::mat4(1.0f), lightPos2) * glm::scale(glm::mat4(1.0f), lightScale);
+            lightShader.use();
+            lightShader.setUniform("lightColor", glm::vec4(lightColor2Bulb, 1.0f));
+
+            lightShader.setUniform("model", model);
+            lightShader.setUniform("view", view);
+            lightShader.setUniform("projection", projection);
+
+            lightMesh.draw();
+        }
 
         // Rendering planets
         if (gRenderPlanets) {
+            lightingShader.use();
             // Moon
             model = glm::translate(glm::mat4(1.0f), moonPos) * glm::scale(glm::mat4(1.0f), moonScale);
             model = glm::rotate(model, glm::radians(60.f), glm::vec3(0.0f, 0.0f, 1.0f));
@@ -705,6 +790,20 @@ int main()
             earthTex.bind(0);
             earth.draw();
             earthTex.unbind(0);
+
+
+            // Rendering launcher
+            model = glm::translate(glm::mat4(1.0f), launcherPos) * glm::scale(glm::mat4(1.0f), launcherScale);
+            lightingShader.setUniform("model", model);
+
+            lightingShader.setUniform("material.ambient", glm::vec3(0.1f, 0.1f, 0.1f));
+            lightingShader.setUniform("material.specular", glm::vec3(0.5f, 0.5f, 0.5f));
+            lightingShader.setUniform("material.shininess", 150.0f);
+            lightingShader.setUniformSampler("material.diffuseMap", 0);
+
+            launcherTex.bind(0);
+            launcher.draw();
+            launcherTex.unbind(0);
         }
 
         // Rendering floor - not needed rn
@@ -722,53 +821,41 @@ int main()
         floorTex.unbind(0);
         */
 
+        // Rendering clouds
+        if (gLaunch) {
+            for (int i = 0; i < clouds.size(); i++) {
+                cloudShader.use();
+                cloudShader.setUniform("lightColor", clouds[i].colAlph);
 
-        // Rendering launcher
-        model = glm::translate(glm::mat4(1.0f), launcherPos) * glm::scale(glm::mat4(1.0f), launcherScale);
-        lightingShader.setUniform("model", model);
+                cloudShader.setUniform("model", clouds[i].model);
+                cloudShader.setUniform("view", view);
+                cloudShader.setUniform("projection", projection);
 
-        lightingShader.setUniform("material.ambient", glm::vec3(0.1f, 0.1f, 0.1f));
-        lightingShader.setUniform("material.specular", glm::vec3(0.5f, 0.5f, 0.5f));
-        lightingShader.setUniform("material.shininess", 150.0f);
-        lightingShader.setUniformSampler("material.diffuseMap", 0);
+                cloudShader.setUniform("viewPos", viewPos);
 
-        launcherTex.bind(0);
-        launcher.draw();
-        launcherTex.unbind(0);
+                cloudShader.setUniform("lightTab[0].ambient", glm::vec3(0.2f, 0.0f, 0.0f));
+                cloudShader.setUniform("lightTab[0].diffuse", lightColor3);
+                cloudShader.setUniform("lightTab[0].specular", glm::vec3(1.0f, 0.0f, 0.0f));
+                cloudShader.setUniform("lightTab[0].position", lightPos3);
+                cloudShader.setUniform("lightTab[0].isOn", gLaunch);
 
+                cloudTex.bind(0);
+                cloud.draw();
+                cloudTex.unbind(0);
+                changeCloudVals(&clouds[i], currentTime);
 
-        // Rendering light on top of the rocket
+                if (clouds[i].colAlph.a <= 0.0f) {
+                    clouds.erase(clouds.begin() + i);
+                }
+            }
 
-        model = glm::translate(glm::mat4(1.0f), lightPos2) * glm::scale(glm::mat4(1.0f), lightScale);
-        lightShader.use();
-        lightShader.setUniform("lightColor", lightColor2Bulb);
-
-        lightShader.setUniform("model", model);
-        lightShader.setUniform("view", view);
-        lightShader.setUniform("projection", projection);
-
-        lightMesh.draw();
-
-
-        // Rendering skybox
-        
-        glDepthFunc(GL_LEQUAL);
-
-        skyBoxShader.use();
-        view = glm::mat4(glm::mat3(orbitCamera.getViewMatrix()));
-        skyBoxShader.setUniform("model", glm::mat4(1.0f));
-        skyBoxShader.setUniform("view", view);
-        skyBoxShader.setUniform("projection", projection);
-
-        skyBoxTex.bind(0);
-        skyBox.draw();
-        skyBoxTex.unbind(0);
-
-        glDepthFunc(GL_LESS);
-        
+            if (currentTime - lastCloudAddTime >= (0.1 / gRocketPartsCurrentVelocity[gFireLocationIndex].y) && gFlames) {
+                addCloud(&clouds, gRocketPartsCurrentPos[gFireLocationIndex] + glm::vec3(0.0f, -0.5f, 0.0f));
+                lastCloudAddTime = currentTime;
+            }
+        }
 
         lastTime = currentTime;
-        frameCount++;
 
         glfwSwapBuffers(gWindow);
     }  

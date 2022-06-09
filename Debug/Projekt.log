@@ -1,0 +1,9 @@
+﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(514,5): warning MSB8028: Katalog pośredni (Debug\) zawiera pliki udostępnione z innego projektu (OpenGL_Tutorial.vcxproj). Może to spowodować niepoprawne zachowanie podczas oczyszczania i ponownej kompilacji.
+  main.cpp
+D:\PP\4sem\GKiW\Projekt\src\main.cpp(376,58): warning C4244: "-=": konwersja z "double" do "T", możliwa utrata danych
+          with
+          [
+              T=float
+          ]
+D:\PP\4sem\GKiW\Projekt\src\main.cpp(826,31): warning C4018: "<": niezgodność typu ze znakiem/bez znaku
+  Projekt.vcxproj -> D:\PP\4sem\GKiW\Projekt\bin\Projekt.exe

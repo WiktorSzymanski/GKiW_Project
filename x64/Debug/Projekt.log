@@ -1,0 +1,66 @@
+﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(514,5): warning MSB8028: Katalog pośredni (x64\Debug\) zawiera pliki udostępnione z innego projektu (OpenGL_Tutorial.vcxproj). Może to spowodować niepoprawne zachowanie podczas oczyszczania i ponownej kompilacji.
+  main.cpp
+D:\PP\4sem\GKiW\Projekt\src\main.cpp(376,58): warning C4244: "-=": konwersja z "double" do "T", możliwa utrata danych
+          with
+          [
+              T=float
+          ]
+  Rocket.cpp
+  Generowanie kodu...
+main.obj : error LNK2019: nierozpoznany symbol zewnętrzny glewInit przywołany w funkcji "bool __cdecl initOpenGL(void)" (?initOpenGL@@YA_NXZ)
+main.obj : error LNK2019: nierozpoznany symbol zewnętrzny glfwInit przywołany w funkcji "bool __cdecl initOpenGL(void)" (?initOpenGL@@YA_NXZ)
+main.obj : error LNK2019: nierozpoznany symbol zewnętrzny glfwTerminate przywołany w funkcji "bool __cdecl initOpenGL(void)" (?initOpenGL@@YA_NXZ)
+main.obj : error LNK2019: nierozpoznany symbol zewnętrzny glfwGetPrimaryMonitor przywołany w funkcji "bool __cdecl initOpenGL(void)" (?initOpenGL@@YA_NXZ)
+main.obj : error LNK2019: nierozpoznany symbol zewnętrzny glfwGetVideoMode przywołany w funkcji "bool __cdecl initOpenGL(void)" (?initOpenGL@@YA_NXZ)
+main.obj : error LNK2019: nierozpoznany symbol zewnętrzny glfwWindowHint przywołany w funkcji "bool __cdecl initOpenGL(void)" (?initOpenGL@@YA_NXZ)
+main.obj : error LNK2019: nierozpoznany symbol zewnętrzny glfwCreateWindow przywołany w funkcji "bool __cdecl initOpenGL(void)" (?initOpenGL@@YA_NXZ)
+main.obj : error LNK2019: nierozpoznany symbol zewnętrzny glfwWindowShouldClose przywołany w funkcji main
+main.obj : error LNK2019: nierozpoznany symbol zewnętrzny glfwSetWindowShouldClose przywołany w funkcji "void __cdecl glfw_onKey(struct GLFWwindow *,int,int,int,int)" (?glfw_onKey@@YAXPEAUGLFWwindow@@HHHH@Z)
+main.obj : error LNK2019: nierozpoznany symbol zewnętrzny glfwSetWindowTitle przywołany w funkcji "void __cdecl showFPS(struct GLFWwindow *)" (?showFPS@@YAXPEAUGLFWwindow@@@Z)
+main.obj : error LNK2019: nierozpoznany symbol zewnętrzny glfwPollEvents przywołany w funkcji main
+main.obj : error LNK2019: nierozpoznany symbol zewnętrzny glfwSetInputMode przywołany w funkcji "bool __cdecl initOpenGL(void)" (?initOpenGL@@YA_NXZ)
+main.obj : error LNK2019: nierozpoznany symbol zewnętrzny glfwGetMouseButton przywołany w funkcji "void __cdecl glfw_OnMouseMove(struct GLFWwindow *,double,double)" (?glfw_OnMouseMove@@YAXPEAUGLFWwindow@@NN@Z)
+main.obj : error LNK2019: nierozpoznany symbol zewnętrzny glfwSetCursorPos przywołany w funkcji "bool __cdecl initOpenGL(void)" (?initOpenGL@@YA_NXZ)
+main.obj : error LNK2019: nierozpoznany symbol zewnętrzny glfwSetKeyCallback przywołany w funkcji "bool __cdecl initOpenGL(void)" (?initOpenGL@@YA_NXZ)
+main.obj : error LNK2019: nierozpoznany symbol zewnętrzny glfwSetCursorPosCallback przywołany w funkcji "bool __cdecl initOpenGL(void)" (?initOpenGL@@YA_NXZ)
+main.obj : error LNK2019: nierozpoznany symbol zewnętrzny glfwSetScrollCallback przywołany w funkcji "bool __cdecl initOpenGL(void)" (?initOpenGL@@YA_NXZ)
+main.obj : error LNK2019: nierozpoznany symbol zewnętrzny glfwGetTime przywołany w funkcji "void __cdecl addCloud(class std::vector<struct Cloud,class std::allocator<struct Cloud> > *,struct glm::vec<3,float,0>)" (?addCloud@@YAXPEAV?$vector@UCloud@@V?$allocator@UCloud@@@std@@@std@@U?$vec@$02M$0A@@glm@@@Z)
+main.obj : error LNK2019: nierozpoznany symbol zewnętrzny glfwMakeContextCurrent przywołany w funkcji "bool __cdecl initOpenGL(void)" (?initOpenGL@@YA_NXZ)
+main.obj : error LNK2019: nierozpoznany symbol zewnętrzny glfwSwapBuffers przywołany w funkcji main
+main.obj : error LNK2001: nierozpoznany symbol zewnętrzny glewExperimental
+Mesh.obj : error LNK2019: nierozpoznany symbol zewnętrzny __imp___glewBindBuffer przywołany w funkcji "private: void __cdecl Mesh::initBuffers(void)" (?initBuffers@Mesh@@AEAAXXZ)
+Mesh.obj : error LNK2019: nierozpoznany symbol zewnętrzny __imp___glewBufferData przywołany w funkcji "private: void __cdecl Mesh::initBuffers(void)" (?initBuffers@Mesh@@AEAAXXZ)
+Mesh.obj : error LNK2019: nierozpoznany symbol zewnętrzny __imp___glewDeleteBuffers przywołany w funkcji "public: __cdecl Mesh::~Mesh(void)" (??1Mesh@@QEAA@XZ)
+Mesh.obj : error LNK2019: nierozpoznany symbol zewnętrzny __imp___glewGenBuffers przywołany w funkcji "private: void __cdecl Mesh::initBuffers(void)" (?initBuffers@Mesh@@AEAAXXZ)
+Mesh.obj : error LNK2019: nierozpoznany symbol zewnętrzny __imp___glewEnableVertexAttribArray przywołany w funkcji "private: void __cdecl Mesh::initBuffers(void)" (?initBuffers@Mesh@@AEAAXXZ)
+Mesh.obj : error LNK2019: nierozpoznany symbol zewnętrzny __imp___glewVertexAttribPointer przywołany w funkcji "private: void __cdecl Mesh::initBuffers(void)" (?initBuffers@Mesh@@AEAAXXZ)
+Mesh.obj : error LNK2019: nierozpoznany symbol zewnętrzny __imp___glewBindVertexArray przywołany w funkcji "public: void __cdecl Mesh::draw(void)" (?draw@Mesh@@QEAAXXZ)
+Mesh.obj : error LNK2019: nierozpoznany symbol zewnętrzny __imp___glewDeleteVertexArrays przywołany w funkcji "public: __cdecl Mesh::~Mesh(void)" (??1Mesh@@QEAA@XZ)
+Mesh.obj : error LNK2019: nierozpoznany symbol zewnętrzny __imp___glewGenVertexArrays przywołany w funkcji "private: void __cdecl Mesh::initBuffers(void)" (?initBuffers@Mesh@@AEAAXXZ)
+ShaderProgram.obj : error LNK2019: nierozpoznany symbol zewnętrzny __imp___glewActiveTexture przywołany w funkcji "public: void __cdecl ShaderProgram::setUniformSampler(char const *,int const &)" (?setUniformSampler@ShaderProgram@@QEAAXPEBDAEBH@Z)
+Texture2D.obj : error LNK2001: nierozpoznany symbol zewnętrzny __imp___glewActiveTexture
+Texture3D.obj : error LNK2001: nierozpoznany symbol zewnętrzny __imp___glewActiveTexture
+ShaderProgram.obj : error LNK2019: nierozpoznany symbol zewnętrzny __imp___glewAttachShader przywołany w funkcji "public: bool __cdecl ShaderProgram::loadShaders(char const *,char const *)" (?loadShaders@ShaderProgram@@QEAA_NPEBD0@Z)
+ShaderProgram.obj : error LNK2019: nierozpoznany symbol zewnętrzny __imp___glewCompileShader przywołany w funkcji "public: bool __cdecl ShaderProgram::loadShaders(char const *,char const *)" (?loadShaders@ShaderProgram@@QEAA_NPEBD0@Z)
+ShaderProgram.obj : error LNK2019: nierozpoznany symbol zewnętrzny __imp___glewCreateProgram przywołany w funkcji "public: bool __cdecl ShaderProgram::loadShaders(char const *,char const *)" (?loadShaders@ShaderProgram@@QEAA_NPEBD0@Z)
+ShaderProgram.obj : error LNK2019: nierozpoznany symbol zewnętrzny __imp___glewCreateShader przywołany w funkcji "public: bool __cdecl ShaderProgram::loadShaders(char const *,char const *)" (?loadShaders@ShaderProgram@@QEAA_NPEBD0@Z)
+ShaderProgram.obj : error LNK2019: nierozpoznany symbol zewnętrzny __imp___glewDeleteProgram przywołany w funkcji "public: __cdecl ShaderProgram::~ShaderProgram(void)" (??1ShaderProgram@@QEAA@XZ)
+ShaderProgram.obj : error LNK2019: nierozpoznany symbol zewnętrzny __imp___glewDeleteShader przywołany w funkcji "public: bool __cdecl ShaderProgram::loadShaders(char const *,char const *)" (?loadShaders@ShaderProgram@@QEAA_NPEBD0@Z)
+ShaderProgram.obj : error LNK2019: nierozpoznany symbol zewnętrzny __imp___glewGetProgramInfoLog przywołany w funkcji "private: void __cdecl ShaderProgram::checkCompileErrors(unsigned int,enum ShaderProgram::ShaderType)" (?checkCompileErrors@ShaderProgram@@AEAAXIW4ShaderType@1@@Z)
+ShaderProgram.obj : error LNK2019: nierozpoznany symbol zewnętrzny __imp___glewGetProgramiv przywołany w funkcji "private: void __cdecl ShaderProgram::checkCompileErrors(unsigned int,enum ShaderProgram::ShaderType)" (?checkCompileErrors@ShaderProgram@@AEAAXIW4ShaderType@1@@Z)
+ShaderProgram.obj : error LNK2019: nierozpoznany symbol zewnętrzny __imp___glewGetShaderInfoLog przywołany w funkcji "private: void __cdecl ShaderProgram::checkCompileErrors(unsigned int,enum ShaderProgram::ShaderType)" (?checkCompileErrors@ShaderProgram@@AEAAXIW4ShaderType@1@@Z)
+ShaderProgram.obj : error LNK2019: nierozpoznany symbol zewnętrzny __imp___glewGetShaderiv przywołany w funkcji "private: void __cdecl ShaderProgram::checkCompileErrors(unsigned int,enum ShaderProgram::ShaderType)" (?checkCompileErrors@ShaderProgram@@AEAAXIW4ShaderType@1@@Z)
+ShaderProgram.obj : error LNK2019: nierozpoznany symbol zewnętrzny __imp___glewGetUniformLocation przywołany w funkcji "private: int __cdecl ShaderProgram::getUniformLocation(char const *)" (?getUniformLocation@ShaderProgram@@AEAAHPEBD@Z)
+ShaderProgram.obj : error LNK2019: nierozpoznany symbol zewnętrzny __imp___glewLinkProgram przywołany w funkcji "public: bool __cdecl ShaderProgram::loadShaders(char const *,char const *)" (?loadShaders@ShaderProgram@@QEAA_NPEBD0@Z)
+ShaderProgram.obj : error LNK2019: nierozpoznany symbol zewnętrzny __imp___glewShaderSource przywołany w funkcji "public: bool __cdecl ShaderProgram::loadShaders(char const *,char const *)" (?loadShaders@ShaderProgram@@QEAA_NPEBD0@Z)
+ShaderProgram.obj : error LNK2019: nierozpoznany symbol zewnętrzny __imp___glewUniform1f przywołany w funkcji "public: void __cdecl ShaderProgram::setUniform(char const *,int const &)" (?setUniform@ShaderProgram@@QEAAXPEBDAEBH@Z)
+ShaderProgram.obj : error LNK2019: nierozpoznany symbol zewnętrzny __imp___glewUniform1i przywołany w funkcji "public: void __cdecl ShaderProgram::setUniformSampler(char const *,int const &)" (?setUniformSampler@ShaderProgram@@QEAAXPEBDAEBH@Z)
+ShaderProgram.obj : error LNK2019: nierozpoznany symbol zewnętrzny __imp___glewUniform2f przywołany w funkcji "public: void __cdecl ShaderProgram::setUniform(char const *,struct glm::vec<2,float,0> const &)" (?setUniform@ShaderProgram@@QEAAXPEBDAEBU?$vec@$01M$0A@@glm@@@Z)
+ShaderProgram.obj : error LNK2019: nierozpoznany symbol zewnętrzny __imp___glewUniform3f przywołany w funkcji "public: void __cdecl ShaderProgram::setUniform(char const *,struct glm::vec<3,float,0> const &)" (?setUniform@ShaderProgram@@QEAAXPEBDAEBU?$vec@$02M$0A@@glm@@@Z)
+ShaderProgram.obj : error LNK2019: nierozpoznany symbol zewnętrzny __imp___glewUniform4f przywołany w funkcji "public: void __cdecl ShaderProgram::setUniform(char const *,struct glm::vec<4,float,0> const &)" (?setUniform@ShaderProgram@@QEAAXPEBDAEBU?$vec@$03M$0A@@glm@@@Z)
+ShaderProgram.obj : error LNK2019: nierozpoznany symbol zewnętrzny __imp___glewUniformMatrix4fv przywołany w funkcji "public: void __cdecl ShaderProgram::setUniform(char const *,struct glm::mat<4,4,float,0> const &)" (?setUniform@ShaderProgram@@QEAAXPEBDAEBU?$mat@$03$03M$0A@@glm@@@Z)
+ShaderProgram.obj : error LNK2019: nierozpoznany symbol zewnętrzny __imp___glewUseProgram przywołany w funkcji "public: void __cdecl ShaderProgram::use(void)" (?use@ShaderProgram@@QEAAXXZ)
+Texture2D.obj : error LNK2019: nierozpoznany symbol zewnętrzny __imp___glewGenerateMipmap przywołany w funkcji "public: bool __cdecl Texture2D::loadTexture(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &,bool)" (?loadTexture@Texture2D@@QEAA_NAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@_N@Z)
+.\common\lib\glfw3.lib : warning LNK4272: wystąpił konflikt typu maszyny biblioteki „x86” z typem maszyny docelowej „x64”
+.\common\lib\glew32s.lib : warning LNK4272: wystąpił konflikt typu maszyny biblioteki „x86” z typem maszyny docelowej „x64”
+.\bin\Projekt.exe : fatal error LNK1120: liczba nierozpoznanych elementów zewnętrznych: 52
